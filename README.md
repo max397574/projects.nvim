@@ -71,4 +71,9 @@ local c_project = Project.new {
 }
 
 require('projects.manager').register(c_project)
+
+local pyright_project = require('projects.lspconfig_wrapper')('pyright')
+require('projects.manager').register(pyright_project)
+
 ```
+
