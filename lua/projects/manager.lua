@@ -32,5 +32,4 @@ M.register = function(project)
   end
 end
 
-
 return M

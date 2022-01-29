@@ -39,7 +39,7 @@ function Project.new(config)
     attached_buffers = {},
     workspace_folders = config.workspace_folders or {},
     initialized = false,
-    config=config or {},
+    config = config or {},
   }
   local self = setmetatable(project_obj, Project)
   return self
