@@ -26,7 +26,7 @@ M.match_projects = function()
 
   for _, project in pairs(project_templates) do
     if project:match(bufname) then
-      table.insert(matching_projects)
+      table.insert(matching_projects, project)
     end
   end
 

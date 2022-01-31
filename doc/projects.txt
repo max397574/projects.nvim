@@ -55,3 +55,24 @@ A project is first defined by a `config` table which takes the following keys:
     `function(self, bufnr)`
 
     Function executed each time a new buffer is attached to a project.
+
+==============================================================================
+PROJECT METHODS                                               *project-methods*
+
+local pyright_project = require('projects.lspconfig_wrapper')('pyright')
+require('projects.manager').register(pyright_project)
+
+==============================================================================
+HELPER FUNCTIONS                                              *project-methods*
+
+:Project Info
+
+:Project Start
+
+:Project Stop
+
+:Project attach <buffer>
+
+:Project detach <buffer>
+
+vim:tw=78:ts=8:ft=help:norl:
