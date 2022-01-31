@@ -1,16 +1,13 @@
-local Project = {}
-Project.__index = Project
+local M = {}
+M.__index = M
 
-function Project:match(bufnr)
-  if self.config.match then
-    return self.config:match(bufnr)
-  end
-  return false
+function M:match(bufnr)
+  return self.config:match(bufnr)
 end
 
-function Project:attach(bufnr)
+function M:attach(bufnr)
   if not self.initialized then
-    self:on_init()
+    self:initialize()
   end
 
   if self.config.on_attach then
@@ -20,29 +17,29 @@ function Project:attach(bufnr)
   self.attached_buffers[bufnr] = true
 end
 
-function Project:detach(bufnr)
+function M:detach(bufnr)
   if self.config.on_detach then
     self.config:on_detach(bufnr)
   end
+
   self.attached_buffers[bufnr] = nil
 end
 
-function Project:on_init()
+function M:initialize()
   if self.config.on_init then
     self.config:on_init()
   end
   self.initialized = true
 end
 
-function Project.new(config)
-  local project_obj = {
-    attached_buffers = {},
-    workspace_folders = config.workspace_folders or {},
-    initialized = false,
+function M.new(config)
+  local state = {
     config = config or {},
+    workspace_folders = config.workspace_folders or {},
+    attached_buffers = {},
+    initialized = false,
   }
-  local self = setmetatable(project_obj, Project)
-  return self
+  return setmetatable(state, M)
 end
 
-return Project
+return M
