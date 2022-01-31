@@ -23,7 +23,9 @@ M.match_projects = function()
     end
   end
 
-  table.sort(matching_projects, function(a,b) return a.priority > b.priority end)
+  table.sort(matching_projects, function(a, b)
+    return a.priority > b.priority
+  end)
 
   for _, project in pairs(matching_projects) do
     project:attach(bufnr)
