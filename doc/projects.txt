@@ -1,0 +1,57 @@
+*projects.txt*         For Nvim version 0.6.1+          Last change: 2022 Jan 31
+==============================================================================
+TABLE OF CONTENTS                                                *projects-toc*
+
+1.  Introduction               (|projects|)
+
+==============================================================================
+INTRODUCTION                                                         *projects*
+
+A `project` is a way of describing a set of editor behavior local to a given
+collection of files. This state can include:
+
+- Keybinds
+- Language servers
+- Formatters
+- Linters
+
+In addition to state, a `project` exposes state to plugins that may change
+behavior based on the local environment, such as restricting search plugins to
+operating on the current project files.
+
+==============================================================================
+PROJECT DEFINITION                                          *project-definition*
+
+A project is first defined by a `config` table which takes the following keys:
+
+- {match}
+
+    `function(self, bufnr)`
+
+    Returns either a filepath (string) or nil. The language server will only
+    start if the function returns a filepath.
+
+- {name}
+
+    `string`
+
+    Name used in project definition.
+
+- {on_init}
+
+    `function(self)`
+
+    Function executed on initialization of the project, after project
+    has been matched.
+
+- {on_attach}
+
+    `function(self, bufnr)`
+
+    Function executed each time a new buffer is attached to a project.
+
+- {on_detach}
+
+    `function(self, bufnr)`
+
+    Function executed each time a new buffer is attached to a project.

@@ -5,6 +5,13 @@ local project_templates = {}
 
 -- Want to move template project to active projects
 -- Want to avoid remaking template project if the workspaceFolder of the template
+-- Match should determine if *project* is started/attached
+-- Should we also have separate logic for attaching a buffer to a project, and testing whether the buffer should trigger starting a project?
+--
+-- What makes a project template unique? The project id + project root
+-- But projects can technically have multiple roots
+--
+--
 -- project is already found
 M.match_projects = function()
   local bufnr = vim.api.nvim_get_current_buf()
