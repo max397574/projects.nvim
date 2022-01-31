@@ -35,7 +35,7 @@ end
 function M.new(config)
   local state = {
     config = config or {},
-    workspace_folders = config.workspace_folders or {},
+    workspace_folders = config.workspace_folders or vim.NULL,
     attached_buffers = {},
     initialized = false,
   }
