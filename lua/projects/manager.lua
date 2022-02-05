@@ -3,6 +3,8 @@ local M = {}
 local active_projects = {}
 local project_templates = {}
 
+local templates_by_buf = {}
+
 -- Want to move template project to active projects
 -- Want to avoid remaking template project if the workspaceFolder of the template
 -- Match should determine if *project* is started/attached
@@ -15,18 +17,17 @@ local project_templates = {}
 -- project is already found
 M.match_projects = function()
   local bufnr = vim.api.nvim_get_current_buf()
-  local bufname = vim.api.nvim_buf_get_name(bufnr)
 
   local matching_projects = {}
   for _, project in pairs(active_projects) do
-    if project:match(bufname) then
+    if project:match(bufnr) then
       table.insert(matching_projects, project)
     end
   end
 
-  for _, project in pairs(project_templates) do
-    if project:match(bufname) then
-      table.insert(matching_projects, project)
+  for _, template in pairs(project_templates) do
+    if template:match(bufnr) then
+      table.insert(matching_projects, template)
     end
   end
 
