@@ -1,11 +1,16 @@
 local M = {}
 M.__index = M
 
+local project_id = 0
+
 function M:match(bufnr)
   return self.config:match(bufnr)
 end
 
 function M:attach(bufnr)
+  if self.attached_buffers[bufnr] then
+    vim.notify(string.format('Project %s is already attached to buffer (id: %d)', self.name, bufnr))
+  end
   if not self.initialized then
     self:initialize()
   end
@@ -38,7 +43,10 @@ function M.new(config)
     workspace_folders = config.workspace_folders or vim.NULL,
     attached_buffers = {},
     initialized = false,
+    id = project_id,
+    name = config.name or project_id
   }
+  project_id = project_id + 1
   return setmetatable(state, M)
 end
 
