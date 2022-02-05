@@ -36,7 +36,9 @@ M.match_projects = function()
   end)
 
   for _, project in pairs(matching_projects) do
-    project:attach(bufnr)
+    if not project.attached_buffers[bufnr] then
+      project:attach(bufnr)
+    end
     if project.exclusive then
       break
     end
