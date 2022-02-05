@@ -67,7 +67,6 @@ function M.new(config)
     id = project_id,
     name = config.name or project_id
   }
-  state.config.should_attach = state.config.should_attach or default_should_attach
   project_id = project_id + 1
   return setmetatable(state, M)
 end
