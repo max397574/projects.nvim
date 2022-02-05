@@ -89,21 +89,39 @@ Project.new({})
 
 `Project.new()` takes a config table and returns a `Project` object.
 
-A config table should consist of:
+A config table can consist of the following optional entries:
 
 ```lua
 { 
-  on_attach = function(bufnr)
-  on_init = function()
-  on_detach = function()
-  should_attach = function(bufnr)
-  filetypes = [string]
+  should_attach = function(bufnr),
   workspace_folders = [string]
+  filetypes = [string]
+  priority = number
+  exclusive = boolean
+
+  on_init = function()
+  on_attach = function(bufnr)
+  on_detach = function()
 }
 
 ```
 
-The `match` function 
+`should_attach` is a callback function that takes in the current buffer id and returns a boolean whether the current buffer should attach to the project. *This is the only config item for which there is a default value. The default config checks if:
+* The current buffer name is a child of one of the workspace folders. If empty, the Project will not attach to any buffer.
+* The current buffer filetype matches those of `filetypes`. If empty, the Project will attach to any buffer filetype.
 
-A project template is identical to a project 
+`workspace_folders` is a table of strings that specify the folders that constitute the project. All files that exist under these folders are assumed to belong to the project. This table is most commonly used by `should_attach` to determine if the current buffer should be attached to the project. `workspace_folders` should *only* use absolute paths, as these are not expanded.
+
+`filetypes` is a table of strings specifying the vim filetypes to which this project should attach. It is principally used by the default `should_attach` to allow restricting the project to a subset of filetypes.
+
+`priority` is a number specifying the priority of the project. A higher number indicates a higher priority. This is most often used in conjunction with the `exclusive` key to allow setting a priority order in which projects should be attached to the buffer. That is, by setting the priority for a project to a high number and `exclusive` to true, a user can ensure that no other project attempts to attach to this buffer.
+
+`exclusive` is a boolean specifying whether additional projects should attempt to attach to this buffer.
+
+`on_init` is a callback function that is called after the project is initialized. A project is initialized before the first `on_attach` callback is invoked. `on_init` is typically used to launch language servers or set project level variables.
+
+`on_attach` is a callback function that takes in the buffer number and is run the first time this buffer is opened given that it matches the project. If the project has no `attached_buffers` then the project is first initialized (which calls `on_init`). `on_attach` is typically used to add keybindings and set buffer-local settings.
+
+`on_detach` is a callback function that takes in the buffer number and is executed when this buffer is detached from the projects. `on_detach` is typically used to clear buffer-local settings and keybindings.
+
 
