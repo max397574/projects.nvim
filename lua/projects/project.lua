@@ -3,6 +3,27 @@ M.__index = M
 
 local project_id = 0
 
+local is_child = function(path, base)
+  -- TODO: replace with pathlib
+  local util = require('projects.util')
+  path = util.path.sanitize(path)
+  base = util.base.sanitize(base)
+  return string.sub(path, 1, string.len(base)) == base
+end
+
+local default_should_attach = function(self, bufnr)
+  local bufname = vim.api.nvim_buf_get_name(bufnr)
+  local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+  if not vim.tbl_contains(self.config.filetypes, filetype) then
+    return false
+  end
+  for workspace_folder, _ in ipairs(self.workspace_folders) do
+    if is_child(bufname, workspace_folder) then
+      return true
+    end
+  end
+end
+
 function M:should_attach(bufnr)
   return self.config:should_attach(bufnr)
 end
@@ -46,6 +67,7 @@ function M.new(config)
     id = project_id,
     name = config.name or project_id
   }
+  state.config.should_attach = state.config.should_attach or default_should_attach
   project_id = project_id + 1
   return setmetatable(state, M)
 end

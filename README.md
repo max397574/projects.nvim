@@ -125,3 +125,4 @@ A config table can consist of the following optional entries:
 `on_detach` is a callback function that takes in the buffer number and is executed when this buffer is detached from the projects. `on_detach` is typically used to clear buffer-local settings and keybindings.
 
 
+
