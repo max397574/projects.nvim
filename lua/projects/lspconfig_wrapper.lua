@@ -4,7 +4,7 @@ local function generate_project(server_configuration)
   local base_config = require(string.format('lspconfig.server_configurations.%s', server_configuration)).default_config
   return Project.new {
     priority = 10,
-    match = function(self, bufnr)
+    should_attach = function(self, bufnr)
       local bufname = vim.api.nvim_buf_get_name(bufnr)
       local filetype = vim.api.nvim_buf_get_option(0, 'filetype')
       if not vim.tbl_contains(base_config.filetypes, filetype) then

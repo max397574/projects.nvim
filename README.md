@@ -77,3 +77,33 @@ require('projects.manager').register(pyright_project)
 
 ```
 
+
+### Project vs. project config file vs. project template
+
+A project can be directly instantiated by calling:
+
+```lua
+local Project = require 'projects.project'
+Project.new({})
+```
+
+`Project.new()` takes a config table and returns a `Project` object.
+
+A config table should consist of:
+
+```lua
+{ 
+  on_attach = function(bufnr)
+  on_init = function()
+  on_detach = function()
+  should_attach = function(bufnr)
+  filetypes = [string]
+  workspace_folders = [string]
+}
+
+```
+
+The `match` function 
+
+A project template is identical to a project 
+

@@ -20,13 +20,13 @@ M.match_projects = function()
 
   local matching_projects = {}
   for _, project in pairs(active_projects) do
-    if project:match(bufnr) then
+    if project:should_attach(bufnr) then
       table.insert(matching_projects, project)
     end
   end
 
   for _, template in pairs(project_templates) do
-    if template:match(bufnr) then
+    if template:should_attach(bufnr) then
       table.insert(matching_projects, template)
     end
   end

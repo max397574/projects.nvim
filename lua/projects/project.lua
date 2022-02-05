@@ -3,8 +3,8 @@ M.__index = M
 
 local project_id = 0
 
-function M:match(bufnr)
-  return self.config:match(bufnr)
+function M:should_attach(bufnr)
+  return self.config:should_attach(bufnr)
 end
 
 function M:attach(bufnr)
